@@ -1,0 +1,8 @@
+platform :ios, '12.0'
+project '/Users/douglas/Desktop/Test/CouBoom/CouBoom.xcodeproj'
+target 'CouBoom' do
+pod 'AFNetworking'
+pod 'ORStackView'
+pod 'SwiftyJSON'
+pod 'SnapSDK'
+end

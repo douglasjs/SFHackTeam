@@ -1,0 +1,6 @@
+module Pods_CouBoom {
+  umbrella header "Pods-CouBoom-umbrella.h"
+
+  export *
+  module * { export * }
+}
