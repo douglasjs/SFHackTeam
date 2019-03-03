@@ -13,11 +13,15 @@ class Coupon(Resource):
                         type=int,
                         required=True,
                         help='This field can\'t be blank')
+    parser.add_argument('limit_times',
+                        type=int,
+                        required=False)
+    parser.add_argument('used_times',
+                        type=int,
+                        required=False)
 
-    def get(self):
-        # data = Coupon.parser.parse_args()
-        # user_id = data['user_id']
-        # store_id = data['store_id']
+    @classmethod
+    def get(cls):
         user_id = int(request.args.getlist('user_id')[0])
         store_id = int(request.args.getlist('store_id')[0])
         coupon = CouponModel.find_by_user_store(user_id, store_id)
@@ -25,8 +29,17 @@ class Coupon(Resource):
             return coupon.json()
         return {'msg': 'Coupon not found'}, 404
 
+    @classmethod
+    def post(cls):
+        data = cls.parser.parse_args()
+        print(data)
+        coupon = CouponModel(**data)
+        coupon.add_to_db()
+        return {'msg': 'success'}, 201
+
 
 class CouponList(Resource):
-    def get(self):
+    @classmethod
+    def get(cls):
         coupons = list(map(lambda x: x.json(), CouponModel.find_all()))
         return {'coupons': [coupon for coupon in coupons]}, 200
